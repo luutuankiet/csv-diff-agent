@@ -1,13 +1,13 @@
 name: Deploy to Cloud Run
 
 on:
-  pull_request:
-    branches: [main]
-    types: closed
+  # pull_request:
+  #   branches: [main]
+  #   types: closed
 
-  push: 
-    branches:
-      - main
+  # push: 
+  #   branches:
+  #     - main
 
   workflow_dispatch:
 

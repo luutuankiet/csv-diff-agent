@@ -18,18 +18,22 @@ import pandas as pd
 import numpy as np
 from google.genai.types import Part
 from pathlib import Path
-
+import pandas
+import sys
 load_dotenv()
 
-current_dir = Path(__file__).resolve().parent
+user_python = os.path.dirname(os.path.dirname(pandas.__file__))
 
 python_runtime = MCPToolset(
     connection_params=StdioServerParameters(
-        command='uvx',
+        command='uv',
         args=[
+            "run",
             "mcp-python-interpreter-adk-fork",
             '--dir',
             '/tmp',
+            "--python-path",
+            user_python
         ],
         env={
             "MCP_ALLOW_SYSTEM_ACCESS": "1"
