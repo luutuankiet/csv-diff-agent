@@ -1,0 +1,23 @@
+[project]
+name = "csv-diff-agent"
+version = "0.1.0"
+description = "Agent that dynamically handle data wrangling and csv diff op"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "email-validator>=2.2.0",
+    "google-adk==1.1.1",
+    "google-apps-chat",
+    "google-auth-httplib2",
+    "google-auth-oauthlib",
+    "google-cloud",
+    "google-cloud-aiplatform[adk,agent-engines]>=1.93.0",
+    "google-cloud-firestore",
+    "langchain-google-vertexai>=2.0.23",
+    "minimal-csv-diff==0.2.0",
+    "numpy>=2.2.6",
+    "pandas>=2.2.3",
+    "uv>=0.7.9",
+    "vertexai",
+]

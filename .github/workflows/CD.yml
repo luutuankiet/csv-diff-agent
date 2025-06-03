@@ -1,0 +1,53 @@
+name: Deploy to Cloud Run
+
+on:
+  pull_request:
+    branches: [main]
+    types: closed
+
+  push: 
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ secrets.TF_SA_KEY }}'
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v2'
+
+    - name: 'Set up Python'
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+  
+    - name: 'Setup uv'
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    - name: 'Install google-adk'
+      run: uv pip install google-adk
+
+    - name: Deploy adk
+      env:
+        SERVICE_NAME: 'demo-rag-agent'
+        APP_NAME: 'multi_tool_agent'
+        AGENT_PATH: './multi_tool_agent'
+      run: |
+        uv run adk deploy cloud_run \
+          --project=${{ secrets.GCP_PROJECT }} \
+          --region=${{ secrets.GCP_REGION }} \
+          --service_name="$SERVICE_NAME" \
+          --app_name="$APP_NAME" \
+          --with_ui \
+          "$AGENT_PATH"
