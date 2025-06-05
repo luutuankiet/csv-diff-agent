@@ -239,6 +239,8 @@ name = "csv-diff-agent"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "chardet" },
+    { name = "deprecated" },
     { name = "dotenv" },
     { name = "email-validator" },
     { name = "google-adk" },
@@ -259,6 +261,8 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "chardet", specifier = ">=5.2.0" },
+    { name = "deprecated", specifier = ">=1.2.18" },
     { name = "dotenv", specifier = ">=0.9.9" },
     { name = "email-validator", specifier = ">=2.2.0" },
     { name = "google-adk", specifier = "==1.1.1" },

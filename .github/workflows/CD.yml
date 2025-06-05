@@ -1,15 +1,22 @@
 name: Deploy to Cloud Run
 
 on:
-  # pull_request:
-  #   branches: [main]
-  #   types: closed
+  pull_request:
+    branches: [master]
+    types: closed
 
-  # push: 
-  #   branches:
-  #     - main
+  push: 
+    branches:
+      - master
 
   workflow_dispatch:
+
+
+env:
+  SERVICE_NAME: 'csv-diff-agent'
+  IMAGE_NAME: 'csv-diff-agent'
+  APP_NAME: 'csv_diff_agent'
+  REGISTRY: 'asia-southeast1-docker.pkg.dev'
 
 jobs:
   deploy:
@@ -27,27 +34,20 @@ jobs:
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
 
-    - name: 'Set up Python'
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
-  
-    - name: 'Setup uv'
-      run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
-    - name: 'Install google-adk'
-      run: uv pip install google-adk
+    - name: set image name and tag
+      run: echo "RELEASE=${{ env.REGISTRY }}/${{ secrets.GCP_PROJECT }}/cloud-run-source-deploy/${{ env.IMAGE_NAME }}:${{ github.sha }}" >> "$GITHUB_ENV"
 
-    - name: Deploy adk
-      env:
-        SERVICE_NAME: 'demo-rag-agent'
-        APP_NAME: 'multi_tool_agent'
-        AGENT_PATH: './multi_tool_agent'
+
+    - name: build dockerfile
+      run: docker build -t "$RELEASE" .
+
+    - name: push dockerfile
+      run: docker push "$RELEASE"
+
+    - name: deploy cloud run 
       run: |
-        uv run adk deploy cloud_run \
-          --project=${{ secrets.GCP_PROJECT }} \
-          --region=${{ secrets.GCP_REGION }} \
-          --service_name="$SERVICE_NAME" \
-          --app_name="$APP_NAME" \
-          --with_ui \
-          "$AGENT_PATH"
+        gcloud run deploy ${{ env.SERVICE_NAME }} \
+        --image "$RELEASE"
+        --project=${{ secrets.GCP_PROJECT }} \
+        --region=${{ secrets.GCP_REGION }}
