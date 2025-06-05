@@ -30,14 +30,17 @@ jobs:
       uses: 'google-github-actions/auth@v2'
       with:
         credentials_json: '${{ secrets.TF_SA_KEY }}'
+      
 
     - name: 'Set up Cloud SDK'
       uses: 'google-github-actions/setup-gcloud@v2'
 
+    - name: login to google artifacts registry
+      run: gcloud auth configure-docker ${{ env.REGISTRY }}
+
 
     - name: set image name and tag
       run: echo "RELEASE=${{ env.REGISTRY }}/${{ secrets.GCP_PROJECT }}/cloud-run-source-deploy/${{ env.IMAGE_NAME }}:${{ github.sha }}" >> "$GITHUB_ENV"
-
 
     - name: build dockerfile
       run: docker build -t "$RELEASE" .
@@ -48,6 +51,6 @@ jobs:
     - name: deploy cloud run 
       run: |
         gcloud run deploy ${{ env.SERVICE_NAME }} \
-        --image "$RELEASE"
+        --image "$RELEASE" \
         --project=${{ secrets.GCP_PROJECT }} \
         --region=${{ secrets.GCP_REGION }}
