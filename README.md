@@ -1,3 +1,4 @@
+[![Deploy to Cloud Run](https://github.com/luutuankiet/csv-diff-agent/actions/workflows/CD.yml/badge.svg)](https://github.com/luutuankiet/csv-diff-agent/actions/workflows/CD.yml)
 # CSV Diff Agent 📊
 
 A Python-based agent built with Google ADK that helps users analyze and compare two CSV files to confirm data integrity and detect changes between file versions.
