@@ -42,11 +42,18 @@ jobs:
     - name: set image name and tag
       run: echo "RELEASE=${{ env.REGISTRY }}/${{ secrets.GCP_PROJECT }}/cloud-run-source-deploy/${{ env.IMAGE_NAME }}:${{ github.sha }}" >> "$GITHUB_ENV"
 
+    
     - name: build dockerfile
       run: docker build -t "$RELEASE" .
+      
+    - name: tag latest
+      run: docker tag "$RELEASE" "${{ env.REGISTRY }}/${{ secrets.GCP_PROJECT }}/cloud-run-source-deploy/${{ env.IMAGE_NAME }}:latest"
 
-    - name: push dockerfile
+    - name: push hash tag
       run: docker push "$RELEASE"
+
+    - name: push latest tag
+      run: docker push "${{ env.REGISTRY }}/${{ secrets.GCP_PROJECT }}/cloud-run-source-deploy/${{ env.IMAGE_NAME }}:latest"
 
     - name: deploy cloud run 
       run: |
