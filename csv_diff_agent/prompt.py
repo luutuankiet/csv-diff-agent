@@ -37,12 +37,12 @@ Here is the list of csv filepaths : <input>{csv_raw_files}</input>
     Keep this short and concise.
   - The working python code that programmatically conformed the file. This is for auditing and reproducibility.
 
-- at the end of the successful csv-diff tool use, use tool share_artifact to share all the files to the user:
+- at the end of the successful csv-diff tool use, use tool share_artifact to share all the files to the user by this order:
   - **important** send an additional prompt to the user between each invocation of share_artifact marking the invocation.
-  - the original input files (note that this is renamed so putting original hash will error).
-  - the confirmed files
   - the diff result files
   - the python script used to transform data
+  - the confirmed files
+  - the original input files (note that this is renamed so putting original hash will error).
 
 
 """
