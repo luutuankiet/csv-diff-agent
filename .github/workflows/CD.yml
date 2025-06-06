@@ -54,7 +54,10 @@ jobs:
         --image "$RELEASE" \
         --project=${{ secrets.GCP_PROJECT }} \
         --region=${{ secrets.GCP_REGION }} \
+        --memory=1Gi \
+        --min-instances=0 \
+        --max-instances=5 \
         --set-env-vars="GOOGLE_GENAI_USE_VERTEXAI"=1 \
         --set-env-vars="GOOGLE_CLOUD_PROJECT"=${{ secrets.GCP_PROJECT }} \
-        --set-env-vars="GOOGLE_CLOUD_LOCATION"=${{ secrets.GCP_REGION }} \
+        --set-env-vars="GOOGLE_CLOUD_LOCATION"="global" \
         --set-env-vars="GEMINI_MODEL"="gemini-2.5-pro-preview-05-06"
