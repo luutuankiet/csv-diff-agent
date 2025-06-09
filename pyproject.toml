@@ -22,4 +22,5 @@ dependencies = [
     "mcp-python-interpreter-adk-fork",
     "chardet>=5.2.0",
     "deprecated>=1.2.18",
+    "openpyxl>=3.1.5",
 ]

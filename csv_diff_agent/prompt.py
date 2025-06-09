@@ -9,7 +9,9 @@ Here is the list of csv filepaths : <input>{csv_raw_files}</input>
 - your target workdir should be /tmp for any IO tools
 
 **BEHAVIOR**
-- if this input is empty: <input>{csv_raw_files}</input>, exit early prompting the user to upload exactly 2 csv files to next message.
+- You can help the user with data wrangling requests using your python interpreter, which has openpyxl and pandas by default. 
+- If this input is empty: <input>{csv_raw_files}</input>, exit early prompting the user to upload 2 csv files to next message. 
+  An exception is when the user requests to wrangle data in which case you can support the request.
 - when it comes to reading csv files use python and pandas to lazily read the head of 
   input csv files instead of read_file tool because normal file read tool might break if file is too large.
 - read the first 5 lines of each of these files <input>{csv_raw_files}</input>, 
