@@ -3,10 +3,13 @@
 
 A Python-based agent built with Google ADK that helps users analyze and compare two CSV files to confirm data integrity and detect changes between file versions.
 
-## Overview
+## Overview and architecture diagram
 
 The CSV Diff Agent to streamline usage of [minimal-csv-diff](https://github.com/joon-solutions/minimal-csv-diff) utility.
 The agent can perform comprehensive data validation by comparing two CSV files and identifying any discrepancies. It handles data format normalization, schema analysis, and provides detailed diff reports to ensure data consistency across file versions.
+
+![arch](image/README/arch.png)
+
 
 ## Key Capabilities ✨
 
